@@ -3,9 +3,7 @@ from openai import OpenAI
 import os
 
 app = Flask(__name__)
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-# Al estar el archivo en api/chat.py, Vercel le mandará la petición a esta ruta exacta
 @app.route('/api/chat', methods=['POST', 'GET'])
 def chat_api():
     # 1. El test rápido desde el navegador
@@ -14,11 +12,17 @@ def chat_api():
         
     # 2. El chat real
     try:
+        # Inicializamos OpenAI DENTRO de la función para evitar el "Crash" del servidor
+        api_key = os.environ.get("OPENAI_API_KEY")
+        if not api_key:
+            return jsonify({"reply": "Error: Vercel no está leyendo la API Key."}), 500
+            
+        client = OpenAI(api_key=api_key)
+        
         data = request.json
         user_message = data.get('message')
         history = data.get('history', [])
         
-        # Leemos tu chuleta (asegúrate de que summary.txt sigue dentro de la carpeta api)
         current_dir = os.path.dirname(__file__)
         summary_path = os.path.join(current_dir, 'summary.txt')
         
@@ -41,5 +45,7 @@ def chat_api():
         reply = response.choices[0].message.content
         return jsonify({"reply": reply})
         
+    except FileNotFoundError:
+        return jsonify({"reply": "Error: No encuentro el archivo summary.txt"}), 500
     except Exception as e:
-        return jsonify({"reply": f"Error del sistema: {str(e)}"}), 500
+        return jsonify({"reply": f"Error interno real: {str(e)}"}), 500
