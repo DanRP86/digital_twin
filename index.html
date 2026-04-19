@@ -3,133 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daniel Rubio - Gemelo Digital</title>
+    <title>Daniel Rubio - Digital Twin</title>
     <style>
-        /* Estilos generales y Tema Oscuro Elegante */
+        /* --- VARIABLES DE DISEÑO --- */
+        :root {
+            --bg-body: #0a0c10;
+            --bg-panel: rgba(26, 29, 36, 0.7); /* Semitransparente para el efecto cristal */
+            --primary: #3b82f6; /* Azul moderno */
+            --accent: #60a5fa;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass: blur(12px) saturate(180%);
+        }
+
+        /* --- ESTILOS GENERALES --- */
         body { 
             margin: 0; 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            background-color: #0f1115; 
-            color: #f0f0f0; 
+            background-color: var(--bg-body);
+            /* FONDO PROFESIONAL: Cambia esta URL por tu fondo de Canva (imagen exportada) */
+            background-image: url('https://images.pexels.com/photos/14240656/pexels-photo-14240656.jpeg'); 
+            background-size: cover;
+            background-position: center;
+            color: var(--text-main); 
             display: flex; 
             height: 100vh; 
             overflow: hidden; 
         }
-        
-        /* Contenedor izquierdo: El modelo 3D */
+
+        /* --- MITAD IZQUIERDA: SPLINE --- */
         .avatar-container { 
             width: 50%; 
             height: 100%; 
-            background-color: #1a1d24; 
-            border-right: 1px solid #2d313a; 
+            background-color: transparent; /* Fondo transparente para ver el background del body */
             position: relative;
         }
         
-        /* El iframe que carga tu Spline sin bordes */
         iframe { 
             border: none; 
             width: 100%; 
             height: 100%; 
         }
-        
-        /* Contenedor derecho: Interfaz del Chat */
+
+        /* --- MITAD DERECHA: INTERFAZ CHAT GLASSMORPHISM --- */
         .info-container { 
             width: 50%; 
             display: flex; 
             flex-direction: column; 
             box-sizing: border-box; 
-            background-color: #0f1115; 
+            background-color: var(--bg-panel);
+            backdrop-filter: var(--glass);
+            -webkit-backdrop-filter: var(--glass);
+            border-left: 1px solid var(--border);
         }
         
-        .header { 
-            padding: 30px 40px 10px; 
-            border-bottom: 1px solid #2d313a;
+        /* --- CABECERO ESTILO LINKEDIN --- */
+        .header-profile-card { 
+            padding: 30px 40px; 
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
-        
-        h1 { 
-            color: #60a5fa; 
-            font-size: 2em; 
-            margin: 0 0 5px 0; 
+
+        .profile-pic {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            object-fit: cover;
+            /* REEMPLAZA ESTA URL CON TU FOTO DE PERFIL REAL */
+            background-image: url('https://github.com/DanRP86/digital_twin/blob/main/api/Perfil_sinfondo.jpg');
+            background-size: cover;
         }
-        
-        h2 { 
-            color: #9ca3af; 
-            font-size: 1.1em; 
-            font-weight: 400; 
+
+        .profile-info {
+            flex-grow: 1;
+        }
+
+        .profile-name { 
+            color: var(--text-main); 
+            font-size: 1.6em; 
+            font-weight: 700;
             margin: 0; 
         }
         
-        /* Caja de mensajes del chat */
+        .profile-title { 
+            color: var(--text-muted); 
+            font-size: 0.95em; 
+            font-weight: 400; 
+            margin: 2px 0 10px 0; 
+        }
+
+        .linkedin-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .linkedin-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* --- CAJA DE MENSAJES MODERNIZADA --- */
         .chat-box { 
             flex-grow: 1; 
-            padding: 20px 40px; 
+            padding: 25px 40px; 
             overflow-y: auto; 
             display: flex; 
             flex-direction: column; 
-            gap: 15px; 
+            gap: 20px; 
+            scroll-behavior: smooth;
         }
         
         .msg { 
-            padding: 12px 18px; 
-            border-radius: 12px; 
-            max-width: 80%; 
-            line-height: 1.5; 
+            padding: 14px 20px; 
+            border-radius: 18px; 
+            max-width: 75%; 
+            line-height: 1.6; 
             font-size: 0.95em; 
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .msg-user { 
-            background-color: #2563eb; 
+            background-color: var(--primary);
             color: white; 
             align-self: flex-end; 
-            border-bottom-right-radius: 2px; 
+            border-bottom-right-radius: 4px; 
         }
         
         .msg-ai { 
-            background-color: #1f2937; 
+            background-color: rgba(255, 255, 255, 0.05); /* Muy sutil */
             color: #d1d5db; 
             align-self: flex-start; 
-            border-bottom-left-radius: 2px; 
-            border: 1px solid #374151;
+            border-bottom-left-radius: 4px; 
+            border: 1px solid var(--border);
         }
+
+        /* Pequeño indicador de quién habla */
+        .msg::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            width: 10px;
+            height: 10px;
+        }
+
+        /* Estilo para las barras de desplazamiento (Webkit) */
+        .chat-box::-webkit-scrollbar { width: 6px; }
+        .chat-box::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.1); border-radius: 3px; }
         
-        /* Área de entrada de texto */
+        /* --- ÁREA DE ENTRADA MODERNIZADA --- */
         .input-area { 
             padding: 20px 40px 30px; 
             display: flex; 
-            gap: 10px; 
-            background-color: #0f1115; 
-            border-top: 1px solid #2d313a; 
+            gap: 15px; 
+            background-color: transparent; 
+            border-top: 1px solid var(--border); 
         }
         
         input { 
             flex-grow: 1; 
-            padding: 15px; 
-            border-radius: 8px; 
-            border: 1px solid #374151; 
-            background-color: #1f2937; 
+            padding: 16px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border); 
+            background-color: rgba(0, 0, 0, 0.2); 
             color: white; 
             font-size: 1em; 
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
         
         input:focus { 
             outline: none; 
-            border-color: #60a5fa; 
+            border-color: var(--primary); 
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
         }
         
         button { 
-            background-color: #2563eb; 
+            background-color: var(--primary); 
             color: white; 
             border: none; 
-            padding: 0 25px; 
-            border-radius: 8px; 
+            padding: 0 28px; 
+            border-radius: 12px; 
             cursor: pointer; 
             font-weight: bold; 
-            transition: background-color 0.3s;
+            font-size: 1em;
+            transition: background-color 0.3s, transform 0.1s;
         }
         
-        button:hover { 
-            background-color: #1d4ed8; 
-        }
+        button:hover { background-color: #1d4ed8; }
+        button:active { transform: scale(0.97); }
+
     </style>
 </head>
 <body>
@@ -139,9 +212,16 @@
     </div>
 
     <div class="info-container">
-        <div class="header">
-            <h1>Daniel Rubio Paniagua</h1>
-            <h2>Gemelo Digital & AI Assistant</h2>
+        
+        <div class="header-profile-card">
+            <div class="profile-pic"></div> <div class="profile-info">
+                <h1 class="profile-name">Daniel Rubio Paniagua</h1>
+                <p class="profile-title">AI Champion | Digital Twin Developer | AI Solutions Architect</p>
+                <a href="https://www.linkedin.com/in/danielrubiopaniagua" target="_blank" class="linkedin-button">
+                    <svg style="width:14px;height:14px;margin-right:8px;fill:white;" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    Ver Perfil Completo
+                </a>
+            </div>
         </div>
         
         <div class="chat-box" id="chatBox">
@@ -149,12 +229,13 @@
         </div>
         
         <div class="input-area">
-            <input type="text" id="userInput" placeholder="Escribe tu mensaje aquí..." onkeypress="handleEnter(event)">
+            <input type="text" id="userInput" placeholder="Escribe tu mensaje sobre la carrera de Daniel..." onkeypress="handleEnter(event)">
             <button onclick="sendMessage()">Enviar</button>
         </div>
     </div>
 
     <script>
+        // ... (EL JAVASCRIPT SE MANTIENE EXACTAMENTE IGUAL QUE EN LA VERSIÓN ANTERIOR) ...
         let chatHistory = []; 
 
         async function sendMessage() {
@@ -162,15 +243,12 @@
             const message = inputField.value.trim();
             if (!message) return;
 
-            // 1. Mostrar mensaje del usuario
             addMessageToChat('user', message);
             inputField.value = '';
 
-            // 2. Mostrar "Escribiendo..."
             const loadingId = addMessageToChat('ai', 'Escribiendo...');
 
             try {
-                // 3. Llamada relativa a la API Serverless de Vercel (¡El cambio clave!)
                 const response = await fetch('/api/chat', { 
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -186,32 +264,31 @@
 
                 const data = await response.json();
 
-                // 4. Actualizar con la respuesta real
                 document.getElementById(loadingId).innerText = data.reply;
 
-                // 5. Guardar en el historial
                 chatHistory.push({ role: 'user', content: message });
                 chatHistory.push({ role: 'assistant', content: data.reply });
 
             } catch (error) {
-                document.getElementById(loadingId).innerText = "Hubo un error de conexión con el servidor. ¿Puedes intentarlo de nuevo?";
+                document.getElementById(loadingId).innerText = "Hubo un error de conexión con mi sistema virtual. ¿Puedes intentarlo de nuevo?";
                 console.error("Error en el chat:", error);
             }
         }
+
         function addMessageToChat(role, text) {
             const chatBox = document.getElementById('chatBox');
             const msgDiv = document.createElement('div');
             msgDiv.className = `msg msg-${role}`;
             msgDiv.innerText = text;
             
-            // EL ARREGLO: Añadimos un número aleatorio para que sea imposible que coincidan
             const uniqueId = 'msg-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
             msgDiv.id = uniqueId;
             
             chatBox.appendChild(msgDiv);
-            chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll
+            chatBox.scrollTop = chatBox.scrollHeight; 
             return uniqueId;
         }
+
         function handleEnter(event) {
             if (event.key === 'Enter') sendMessage();
         }
