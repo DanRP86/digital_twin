@@ -5,21 +5,18 @@ import os
 app = Flask(__name__)
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
-# Este enrutador atrapa CUALQUIER petición que Vercel le mande a este archivo
-@app.route('/', defaults={'path': ''}, methods=['POST', 'GET'])
-@app.route('/<path:path>', methods=['POST', 'GET'])
-def chat_api(path):
-    # TRUCO DE DIAGNÓSTICO: Si entras desde el navegador (GET), verás este mensaje
+@app.route('/api/chat', methods=['POST', 'GET'])
+def chat_api():
+    # El test del navegador
     if request.method == 'GET':
-        return jsonify({"status": "ok", "message": "¡El cerebro de Python está vivo y conectado!"})
+        return jsonify({"status": "ok", "message": "¡El cerebro de Python por fin ha despertado!"})
         
-    # Si es el chat (POST), ejecutamos la IA
     try:
         data = request.json
         user_message = data.get('message')
         history = data.get('history', [])
         
-        # Leemos el summary.txt asumiendo que están en la misma carpeta "api"
+        # Leer la chuleta
         current_dir = os.path.dirname(__file__)
         summary_path = os.path.join(current_dir, 'summary.txt')
         
@@ -43,5 +40,4 @@ def chat_api(path):
         return jsonify({"reply": reply})
         
     except Exception as e:
-        # Si algo falla dentro de Python, ahora sí nos lo devolverá a la pantalla
-        return jsonify({"reply": f"Error interno: {str(e)}"}), 500
+        return jsonify({"reply": f"Error interno real capturado: {str(e)}"}), 500
