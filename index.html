@@ -198,21 +198,20 @@
                 console.error("Error en el chat:", error);
             }
         }
-
         function addMessageToChat(role, text) {
             const chatBox = document.getElementById('chatBox');
             const msgDiv = document.createElement('div');
             msgDiv.className = `msg msg-${role}`;
             msgDiv.innerText = text;
             
-            const uniqueId = 'msg-' + Date.now();
+            // EL ARREGLO: Añadimos un número aleatorio para que sea imposible que coincidan
+            const uniqueId = 'msg-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
             msgDiv.id = uniqueId;
             
             chatBox.appendChild(msgDiv);
-            chatBox.scrollTop = chatBox.scrollHeight; 
+            chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll
             return uniqueId;
         }
-
         function handleEnter(event) {
             if (event.key === 'Enter') sendMessage();
         }
