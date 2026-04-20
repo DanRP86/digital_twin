@@ -10,135 +10,123 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- VARIABLES PREMIUM --- */
+        /* --- VARIABLES DE DISEÑO --- */
         :root {
-            --bg-body: #050505; 
-            --glass-bg: rgba(15, 17, 21, 0.5); 
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-highlight: rgba(255, 255, 255, 0.15);
+            --bg-body: #0a0c10;
+            --bg-panel: rgba(20, 22, 28, 0.75); 
             --primary: #3b82f6; 
             --accent: #60a5fa;
-            --text-main: #ffffff;
-            --text-muted: #8892b0;
-            --blur: blur(24px) saturate(200%);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: rgba(255, 255, 255, 0.08);
+            --glass: blur(16px) saturate(180%);
         }
 
+        /* --- ESTILOS GENERALES --- */
         body { 
             margin: 0; 
+            /* APLICAMOS LA NUEVA FUENTE A TODO */
             font-family: 'Space Grotesk', sans-serif; 
             background-color: var(--bg-body);
+            background-image: url('https://images.pexels.com/photos/29450016/pexels-photo-29450016.jpeg'); 
+            background-size: cover;
+            background-position: center;
             color: var(--text-main); 
+            display: flex; 
             height: 100vh; 
             overflow: hidden; 
+        }
+
+        /* --- MITAD IZQUIERDA: SPLINE (40%) --- */
+        .avatar-container { 
+            width: 40%; /* <--- ¡Cambiado a 40%! */
+            height: 100%; 
+            background-color: transparent; 
             position: relative;
         }
-
-        /* --- SPLINE A PANTALLA COMPLETA (Capa 1) --- */
-        .avatar-container { 
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw; 
-            height: 100vh; 
-            z-index: 1; 
-            pointer-events: auto; 
-        }
         
-        iframe { border: none; width: 100%; height: 100%; }
+        iframe { 
+            border: none; 
+            width: 100%; 
+            height: 100%; 
+        }
 
-        /* --- PANEL FLOTANTE DE CRISTAL (Capa 2) --- */
+        /* --- MITAD DERECHA: INTERFAZ CHAT (60%) --- */
         .info-container { 
-            position: absolute;
-            top: 4vh;
-            right: 4vw;
-            width: 480px; 
-            height: 92vh; 
-            z-index: 2; 
-            
+            width: 60%; /* <--- ¡Cambiado a 60%! */
             display: flex; 
             flex-direction: column; 
-            
-            background: var(--glass-bg);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid var(--glass-highlight);
-            border-left: 1px solid var(--glass-highlight);
-            border-radius: 24px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-                        
-            animation: slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(40px);
+            box-sizing: border-box; 
+            background-color: var(--bg-panel);
+            backdrop-filter: var(--glass);
+            -webkit-backdrop-filter: var(--glass);
+            border-left: 1px solid var(--border);
         }
         
-        @keyframes slideUpFade {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- CABECERO PREMIUM --- */
+        /* --- CABECERO ESTILO LINKEDIN --- */
         .header-profile-card { 
-            padding: 30px 35px 20px; 
-            border-bottom: 1px solid var(--glass-border);
+            padding: 35px 50px; 
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
         }
 
         .profile-pic {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            border: 2px solid transparent;
-            /* RECUERDA PONER TU URL RAW DE GITHUB AQUÍ */
+            border: 3px solid var(--primary);
+            object-fit: cover;
+            /* AQUÍ PEGAS LA URL "RAW" DE GITHUB */
             background-image: url('https://media.licdn.com/dms/image/v2/D4D03AQFX4REnfSMrrQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1676215072574?e=1778112000&v=beta&t=-aRi331qvEBShnG4iNl2lVFPhznK6VQLR1AXKGYP1AY');
             background-size: cover;
             background-position: center;
-            box-shadow: 0 0 0 2px var(--glass-bg), 0 0 0 4px var(--primary);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
 
-        .profile-info { flex-grow: 1; }
+        .profile-info {
+            flex-grow: 1;
+        }
 
         .profile-name { 
-            font-size: 1.5em; 
+            color: var(--text-main); 
+            font-size: 1.8em; 
             font-weight: 700;
             margin: 0; 
             letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         
         .profile-title { 
-            color: var(--text-muted); 
-            font-size: 0.85em; 
-            font-weight: 400; 
-            margin: 4px 0 12px 0; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .instruction-box {
-            margin: 0 0 10px 0; 
-            padding: 8px 12px; 
-            background: rgba(59, 130, 246, 0.1); 
-            border-radius: 8px; 
-            border: 1px dashed rgba(96, 165, 250, 0.3);
-        }
-
-        .instruction-text {
-            font-size: 0.82em; 
             color: var(--accent); 
-            margin: 0; 
-            line-height: 1.4;
+            font-size: 1em; 
+            font-weight: 400; 
+            margin: 5px 0 12px 0; 
+        }
+
+        .linkedin-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 18px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px; /* Un toque más cuadrado y moderno */
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .linkedin-button:hover {
+            background-color: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
         }
 
         /* --- CAJA DE MENSAJES --- */
         .chat-box { 
             flex-grow: 1; 
-            padding: 25px 35px; 
+            padding: 30px 50px; 
             overflow-y: auto; 
             display: flex; 
             flex-direction: column; 
@@ -147,86 +135,77 @@
         }
         
         .msg { 
-            padding: 14px 20px; 
-            border-radius: 16px; 
-            max-width: 82%; 
-            line-height: 1.5; 
-            font-size: 0.95em; 
-            animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: scale(0.95) translateY(10px);
-        }
-
-        @keyframes popIn {
-            to { opacity: 1; transform: scale(1) translateY(0); }
+            padding: 16px 22px; 
+            border-radius: 12px; 
+            max-width: 75%; 
+            line-height: 1.6; 
+            font-size: 1em; 
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         
         .msg-user { 
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            background-color: var(--primary);
             color: white; 
             align-self: flex-end; 
-            border-bottom-right-radius: 4px; 
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+            border-bottom-right-radius: 2px; 
         }
         
         .msg-ai { 
             background-color: rgba(255, 255, 255, 0.05); 
-            color: #e2e8f0; 
+            color: #e5e7eb; 
             align-self: flex-start; 
-            border-bottom-left-radius: 4px; 
-            border: 1px solid var(--glass-border);
+            border-bottom-left-radius: 2px; 
+            border: 1px solid var(--border);
         }
 
-        .chat-box::-webkit-scrollbar { width: 4px; }
-        .chat-box::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.1); border-radius: 4px; }
-
+        .chat-box::-webkit-scrollbar { width: 6px; }
+        .chat-box::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.1); border-radius: 3px; }
+        
         /* --- ÁREA DE ENTRADA --- */
         .input-area { 
-            padding: 20px 35px 30px; 
+            padding: 25px 50px 35px; 
             display: flex; 
-            gap: 12px; 
+            gap: 15px; 
             background-color: transparent; 
-            border-top: 1px solid var(--glass-border); 
+            border-top: 1px solid var(--border); 
         }
         
         input { 
             flex-grow: 1; 
-            padding: 14px 18px; 
-            border-radius: 12px; 
-            border: 1px solid var(--glass-border); 
-            background-color: rgba(0, 0, 0, 0.4); 
+            padding: 16px 20px; 
+            border-radius: 10px; 
+            border: 1px solid var(--border); 
+            background-color: rgba(0, 0, 0, 0.3); 
             color: white; 
-            font-family: inherit; 
-            font-size: 0.95em; 
+            font-family: inherit; /* Hereda la fuente Space Grotesk */
+            font-size: 1.05em; 
             transition: all 0.3s ease;
         }
         
         input:focus { 
             outline: none; 
             border-color: var(--primary); 
-            background-color: rgba(0, 0, 0, 0.6);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background-color: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
         }
         
         button { 
-            background: var(--text-main); 
-            color: black; 
+            background-color: var(--primary); 
+            color: white; 
             border: none; 
-            padding: 0 24px; 
-            border-radius: 12px; 
+            padding: 0 32px; 
+            border-radius: 10px; 
             cursor: pointer; 
-            font-weight: 700; 
+            font-weight: 600; 
             font-family: inherit;
-            font-size: 0.95em;
+            font-size: 1.05em;
             transition: all 0.3s ease;
         }
         
-        button:hover { 
-            background: #e2e8f0; 
-            transform: translateY(-2px); 
-            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.1);
-        }
-        button:active { transform: translateY(0); }
+        button:hover { background-color: #2563eb; transform: translateY(-1px); }
+        button:active { transform: translateY(1px); }
+
     </style>
 </head>
 <body>
@@ -236,28 +215,36 @@
     </div>
 
     <div class="info-container">
-        
         <div class="header-profile-card">
             <div class="profile-pic"></div>
-            <div class="profile-info">
-                <h1 class="profile-name">Daniel Rubio Paniagua</h1>
-                <p class="profile-title">Regional Real Estate & Facility Mgmt Portfolio Manager | AI Champion</p>
-                
-                <div class="instruction-box">
-                    <p class="instruction-text">
-                        🤖 <b>Agent:</b> Ask me about Daniel's career.<br>
-                        🎮 <b>3D View:</b> Interact with and rotate the 3D avatar by using your keyboard.
-                    </p>
+            <div class="profile-info" style="display: flex; flex-direction: column; gap: 8px;">
+        
+                <h1 class="profile-name" style="margin: 0; line-height: 1.1;">Daniel Rubio Paniagua</h1>
+        
+                <p class="profile-title" style="margin: 0; font-size: 1.05em; color: #e0e0e0; padding-bottom: 8px;">
+                Regional Real Estate & Facility Mgmt Portfolio Manager | AI Champion
+                </p>
+        
+                <div style="margin-bottom: 12px;">
+                    <a href="https://www.linkedin.com/in/danielrubiopaniagua" target="_blank" class="linkedin-button" style="display: inline-flex; align-items: center; padding: 8px 16px; border-radius: 6px; background-color: #0077b5; color: white; text-decoration: none; font-weight: bold;">
+                        <svg style="width:16px; height:16px; margin-right:8px; fill:white;" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        See Full Profile
+                    </a>
                 </div>
-            </div>
-        </div>
+        
+                <p style="font-size: 0.85em; color: var(--accent); margin: 0; opacity: 0.9;">
+                    🖱️ <i>Interact with and rotate the 3D avatar by using your keyboard</i>
+                </p>
+
+         </div>
+    </div>
         
         <div class="chat-box" id="chatBox">
-            <div class="msg msg-ai">Hello. I am Daniel's digital twin. I have access to his professional background, skills, and projects. How can I assist you today?</div>
+            <div class="msg msg-ai">Hi! I'm Daniel's digital twin. ¿How can I help you today?</div>
         </div>
         
         <div class="input-area">
-            <input type="text" id="userInput" placeholder="Ask a question..." onkeypress="handleEnter(event)">
+            <input type="text" id="userInput" placeholder="Send your message here..." onkeypress="handleEnter(event)">
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
@@ -273,7 +260,7 @@
             addMessageToChat('user', message);
             inputField.value = '';
 
-            const loadingId = addMessageToChat('ai', 'Thinking...');
+            const loadingId = addMessageToChat('ai', 'Escribiendo...');
 
             try {
                 const response = await fetch('/api/chat', { 
@@ -291,8 +278,8 @@
                 chatHistory.push({ role: 'assistant', content: data.reply });
 
             } catch (error) {
-                document.getElementById(loadingId).innerText = "Connection error with my virtual system. Could you try again?";
-                console.error("Chat error:", error);
+                document.getElementById(loadingId).innerText = "Hubo un error de conexión con mi sistema virtual. ¿Puedes intentarlo de nuevo?";
+                console.error("Error en el chat:", error);
             }
         }
 
@@ -301,10 +288,8 @@
             const msgDiv = document.createElement('div');
             msgDiv.className = `msg msg-${role}`;
             msgDiv.innerText = text;
-            
             const uniqueId = 'msg-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
             msgDiv.id = uniqueId;
-            
             chatBox.appendChild(msgDiv);
             chatBox.scrollTop = chatBox.scrollHeight; 
             return uniqueId;
