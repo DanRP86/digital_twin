@@ -27,7 +27,7 @@ tools = [
         "type": "function",
         "function": {
             "name": "get_faqs",
-            "description": "Call this tool to find predefined answers for common questions about Daniel, his background, or specific project details."
+            "description": "Call this tool to find predefined answers for common questions about Daniel, his background, or specific project details. Call this tool if the user asks about specific technologies (like n8n, Microsoft, AI agents), personal projects, or any 'What are you doing/studying' type of questions. This contains Daniel's specific current activities."
         }
     }
 ]
@@ -74,6 +74,7 @@ You are the interactive professional Digital Twin of Daniel Rubio Paniagua. You 
 - Do not dump Daniel's entire CV or life story at the beginning of the conversation. Greet the user briefly, ask how you can help, and wait for their questions.
 - Use your available tools to search Daniel's CV, experience, or FAQs ONLY when the user asks specific questions about his background, education, or personal hobbies.
 - If a user expresses the desire to contact Daniel or hire him, suggest they connect on LinkedIn (https://www.linkedin.com/in/danielrubiopaniagua). The email tool will be implemented soon.
+- If the user mentions specific software or tools (e.g., n8n, Microsoft Copilot, etc.), ALWAYS check the get_faqs or get_detailed_cv tools before providing a generic answer. Daniel's personal experience with these tools is more important than general definitions.
 
 # BASE CONTEXT (SUMMARY ONLY):
 {base_summary}
