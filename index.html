@@ -32,7 +32,10 @@
             background-position: center;
             color: var(--text-main); 
             display: flex; 
-            height: 100vh; 
+            
+            /* FIX SAFARI GLOBAL: Usamos dvh en el body también */
+            height: 100vh; /* Fallback PC */
+            height: 100dvh; /* Fix Safari iOS */
             overflow: hidden; 
         }
 
@@ -217,14 +220,19 @@
 
             .info-container {
                 width: 100%;
-                /* FIX SAFARI */
-                height: 100dvh; 
-                min-height: -webkit-fill-available;
+                
+                /* FIX SAFARI DEFINITIVO: Forzamos posiciones absolutas al borde exacto de la pantalla */
+                position: fixed;
                 top: 0;
+                bottom: 0;
+                left: 0;
                 right: 0;
+                height: 100dvh; 
+                
                 border-radius: 0; 
                 border: none;
-                background: rgba(10, 12, 16, 0.85); 
+                background: rgba(10, 12, 16, 0.95); /* Un pelín más opaco para móvil */
+                z-index: 999;
             }
 
             .header-profile-card {
@@ -235,7 +243,7 @@
             }
 
             .profile-info {
-                align-items: center; /* Centra el contenido en móvil */
+                align-items: center; 
             }
 
             .profile-pic {
@@ -247,12 +255,10 @@
                 font-size: 1.4em !important;
             }
 
-            /* Ocultamos las instrucciones de ratón */
             .instruction-text {
                 display: none !important;
             }
 
-            /* Mostramos la etiqueta móvil */
             .mobile-badge {
                 display: inline-block;
                 background: rgba(59, 130, 246, 0.2);
@@ -266,24 +272,27 @@
             }
 
             .chat-box {
-                padding: 15px 20px;
+                padding: 10px 15px; /* Ligeramente más compacto en móvil */
             }
 
             .msg {
                 max-width: 90%; 
+                font-size: 0.95em;
             }
 
-            /* Ajuste para el teclado inferior del iPhone */
+            /* Ajuste preciso para que no choque con la barra gris inferior del iPhone */
             .input-area {
-                padding: 15px 20px calc(20px + env(safe-area-inset-bottom));
+                padding: 15px 15px calc(15px + env(safe-area-inset-bottom));
+                gap: 10px;
             }
 
             input {
                 padding: 12px 15px;
+                font-size: 1em; /* Evita que el iPhone haga zoom automático al escribir */
             }
 
             button {
-                padding: 0 18px;
+                padding: 0 16px;
             }
         }
     </style>
@@ -341,7 +350,7 @@
             addMessageToChat('user', message);
             inputField.value = '';
 
-            const loadingId = addMessageToChat('ai', 'Escribiendo...');
+            const loadingId = addMessageToChat('ai', 'Thinking...');
 
             try {
                 const response = await fetch('/api/chat', { 
@@ -359,7 +368,7 @@
                 chatHistory.push({ role: 'assistant', content: data.reply });
 
             } catch (error) {
-                document.getElementById(loadingId).innerText = "Hubo un error de conexión con mi sistema virtual. ¿Puedes intentarlo de nuevo?";
+                document.getElementById(loadingId).innerText = "Connection error with my virtual system. Could you try again?";
                 console.error("Error en el chat:", error);
             }
         }
