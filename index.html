@@ -206,6 +206,68 @@
         button:hover { background-color: #2563eb; transform: translateY(-1px); }
         button:active { transform: translateY(1px); }
 
+        /* --- VERSIÓN MÓVIL (Smartphones) --- */
+        @media (max-width: 768px) {
+            /* 1. Ocultamos el modelo 3D para ahorrar batería y espacio */
+            .avatar-container {
+                display: none;
+            }
+
+            /* 2. El panel de cristal ahora ocupa toda la pantalla */
+            .info-container {
+                width: 100%;
+                height: 100vh;
+                top: 0;
+                right: 0;
+                border-radius: 0; /* Quitamos bordes redondeados */
+                border: none;
+                background: rgba(10, 12, 16, 0.85); /* Un poco más oscuro para leer mejor */
+            }
+
+            /* 3. Ajustamos el cabecero para que quepa bien */
+            .header-profile-card {
+                padding: 20px;
+                flex-direction: column; /* Apilamos foto y texto */
+                text-align: center;
+                gap: 12px;
+            }
+
+            .profile-pic {
+                width: 60px;
+                height: 60px;
+            }
+
+            .profile-name {
+                font-size: 1.3em;
+            }
+
+            /* 4. Ocultamos el texto de instrucciones de PC */
+            .instruction-box {
+                display: none;
+            }
+
+            /* 5. Ajustamos el chat y el input */
+            .chat-box {
+                padding: 15px 20px;
+            }
+
+            .msg {
+                max-width: 90%; /* Burbujas más anchas en móvil */
+            }
+
+            .input-area {
+                padding: 15px 20px 20px;
+            }
+
+            input {
+                padding: 12px 15px;
+            }
+
+            button {
+                padding: 0 18px;
+            }
+        }
+
     </style>
 </head>
 <body>
