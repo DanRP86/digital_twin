@@ -25,7 +25,6 @@
         /* --- ESTILOS GENERALES --- */
         body { 
             margin: 0; 
-            /* APLICAMOS LA NUEVA FUENTE A TODO */
             font-family: 'Space Grotesk', sans-serif; 
             background-color: var(--bg-body);
             background-image: url('https://images.pexels.com/photos/29450016/pexels-photo-29450016.jpeg'); 
@@ -39,7 +38,7 @@
 
         /* --- MITAD IZQUIERDA: SPLINE (40%) --- */
         .avatar-container { 
-            width: 40%; /* <--- ¡Cambiado a 40%! */
+            width: 40%; 
             height: 100%; 
             background-color: transparent; 
             position: relative;
@@ -53,7 +52,7 @@
 
         /* --- MITAD DERECHA: INTERFAZ CHAT (60%) --- */
         .info-container { 
-            width: 60%; /* <--- ¡Cambiado a 60%! */
+            width: 60%; 
             display: flex; 
             flex-direction: column; 
             box-sizing: border-box; 
@@ -78,7 +77,6 @@
             border-radius: 50%;
             border: 3px solid var(--primary);
             object-fit: cover;
-            /* AQUÍ PEGAS LA URL "RAW" DE GITHUB */
             background-image: url('https://media.licdn.com/dms/image/v2/D4D03AQFX4REnfSMrrQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1676215072574?e=1778112000&v=beta&t=-aRi331qvEBShnG4iNl2lVFPhznK6VQLR1AXKGYP1AY');
             background-size: cover;
             background-position: center;
@@ -111,7 +109,7 @@
             background-color: var(--primary);
             color: white;
             text-decoration: none;
-            border-radius: 8px; /* Un toque más cuadrado y moderno */
+            border-radius: 8px; 
             font-size: 0.9em;
             font-weight: 600;
             transition: all 0.3s ease;
@@ -178,7 +176,7 @@
             border: 1px solid var(--border); 
             background-color: rgba(0, 0, 0, 0.3); 
             color: white; 
-            font-family: inherit; /* Hereda la fuente Space Grotesk */
+            font-family: inherit; 
             font-size: 1.05em; 
             transition: all 0.3s ease;
         }
@@ -206,19 +204,21 @@
         button:hover { background-color: #2563eb; transform: translateY(-1px); }
         button:active { transform: translateY(1px); }
 
+        /* --- ETIQUETA MÓVIL (Oculta por defecto) --- */
+        .mobile-badge {
+            display: none;
+        }
+
         /* --- VERSIÓN MÓVIL (Smartphones) --- */
         @media (max-width: 768px) {
-            /* 1. Ocultamos el modelo 3D para ahorrar batería y espacio */
             .avatar-container {
                 display: none;
             }
 
-            /* 2. El panel de cristal ahora ocupa toda la pantalla */
             .info-container {
                 width: 100%;
-                /* LA MAGIA PARA SAFARI: dvh (Dynamic Viewport Height) */
+                /* FIX SAFARI */
                 height: 100dvh; 
-                /* Fallback para iPhones antiguos */
                 min-height: -webkit-fill-available;
                 top: 0;
                 right: 0;
@@ -227,12 +227,15 @@
                 background: rgba(10, 12, 16, 0.85); 
             }
 
-            /* 3. Ajustamos el cabecero para que quepa bien */
             .header-profile-card {
                 padding: 20px;
-                flex-direction: column; /* Apilamos foto y texto */
+                flex-direction: column; 
                 text-align: center;
                 gap: 12px;
+            }
+
+            .profile-info {
+                align-items: center; /* Centra el contenido en móvil */
             }
 
             .profile-pic {
@@ -241,23 +244,36 @@
             }
 
             .profile-name {
-                font-size: 1.3em;
+                font-size: 1.4em !important;
             }
 
-            /* 4. Ocultamos el texto de instrucciones de PC */
-            .instruction-box {
-                display: none;
+            /* Ocultamos las instrucciones de ratón */
+            .instruction-text {
+                display: none !important;
             }
 
-            /* 5. Ajustamos el chat y el input */
+            /* Mostramos la etiqueta móvil */
+            .mobile-badge {
+                display: inline-block;
+                background: rgba(59, 130, 246, 0.2);
+                color: var(--accent);
+                padding: 3px 10px;
+                border-radius: 12px;
+                font-size: 0.75em;
+                margin-top: 5px;
+                border: 1px solid rgba(59, 130, 246, 0.3);
+                font-weight: 600;
+            }
+
             .chat-box {
                 padding: 15px 20px;
             }
 
             .msg {
-                max-width: 90%; /* Burbujas más anchas en móvil */
+                max-width: 90%; 
             }
 
+            /* Ajuste para el teclado inferior del iPhone */
             .input-area {
                 padding: 15px 20px calc(20px + env(safe-area-inset-bottom));
             }
@@ -270,7 +286,6 @@
                 padding: 0 18px;
             }
         }
-
     </style>
 </head>
 <body>
@@ -288,6 +303,7 @@
         
                 <p class="profile-title" style="margin: 0; font-size: 1.05em; color: #e0e0e0; padding-bottom: 8px;">
                 Regional Real Estate & Facility Mgmt Portfolio Manager | AI Champion
+                <span class="mobile-badge">📱 Mobile Lite</span>
                 </p>
         
                 <div style="margin-bottom: 12px;">
@@ -297,7 +313,7 @@
                     </a>
                 </div>
         
-                <p style="font-size: 0.85em; color: var(--accent); margin: 0; opacity: 0.9;">
+                <p class="instruction-text" style="font-size: 0.85em; color: var(--accent); margin: 0; opacity: 0.9;">
                     🖱️ <i>Interact with and rotate the 3D avatar by using your keyboard or mouse</i>
                 </p>
 
